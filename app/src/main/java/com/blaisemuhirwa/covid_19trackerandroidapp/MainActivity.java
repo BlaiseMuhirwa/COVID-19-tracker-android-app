@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                home.onResume();
             }
         });
         navigationView.setOnNavigationItemSelectedListener(this);
