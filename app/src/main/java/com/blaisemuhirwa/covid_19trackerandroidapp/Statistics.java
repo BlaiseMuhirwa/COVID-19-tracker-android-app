@@ -7,11 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,6 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class Statistics extends Fragment {
@@ -44,7 +52,6 @@ public class Statistics extends Fragment {
     private AdapterStatistics adapter;
 
     public Statistics() {
-
     }
 
     @Override
@@ -66,7 +73,62 @@ public class Statistics extends Fragment {
 
         progressBar.setVisibility(View.GONE);
         loadStatisticsData();
+
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    adapter.getFilter().filter(charSequence);
+                }
+                catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        /* display a menu for sorting options */
+        final PopupMenu menu = new PopupMenu(context, sortButton);
+        menu.getMenu().add(Menu.NONE, 0, 0, "Ascending");
+        menu.getMenu().add(Menu.NONE, 1, 1, "Descending");
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                /* handle item clicks */
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case 0:
+                        Collections.sort(statsList, new SortedCountriesInAscendingOrder());
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        Collections.sort(statsList, new SortedCountriesInDescendingOrder());
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+                return false;
+            }
+        });
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* show menu */
+                menu.show();
+
+            }
+        });
         return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadStatisticsData();
     }
 
     private void loadStatisticsData() {
@@ -89,7 +151,6 @@ public class Statistics extends Fragment {
                 Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
         /* add requests to queue */
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
@@ -97,7 +158,6 @@ public class Statistics extends Fragment {
 
     private void handleJSONResponse(String response) {
         statsList = new ArrayList<>();
-
         try {
             /* Create a JSON object from the response we get using the api
                 Required: response
@@ -120,7 +180,6 @@ public class Statistics extends Fragment {
                 ModelStatistics modelStats = gson.fromJson(jsonArray.getJSONObject(i).toString(), ModelStatistics.class);
                 statsList.add(modelStats);
             }
-
             /* set up the adapter */
             adapter = new AdapterStatistics(context, statsList);
             statsRecyclerView.setAdapter(adapter);
@@ -133,16 +192,20 @@ public class Statistics extends Fragment {
         }
     }
 
+    class SortedCountriesInAscendingOrder implements Comparator<ModelStatistics> {
+        /* Implements sorting countries in an ascending order */
+        @Override
+        public int compare(ModelStatistics first, ModelStatistics second) {
+            return first.getCountry().compareTo(second.getCountry());
+        }
+    }
+
+    class SortedCountriesInDescendingOrder implements Comparator<ModelStatistics> {
+        /* Implements sorting countries in a descending order */
+        @Override
+        public int compare(ModelStatistics first, ModelStatistics second) {
+            return second.getCountry().compareTo(first.getCountry());
+        }
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,7 +5,6 @@ public class ModelStatistics {
     TotalRecovered, Data, Premium;
 
     public ModelStatistics() {
-
     }
     public ModelStatistics(String country, String countryCode, String slug, String newConfirmed,
                            String totalConfirmed, String newDeaths, String totalDeaths, String newRecovered,

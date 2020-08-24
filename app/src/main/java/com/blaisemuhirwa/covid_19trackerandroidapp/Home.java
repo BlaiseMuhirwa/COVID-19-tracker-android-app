@@ -39,7 +39,6 @@ public class Home extends Fragment {
     private TextView newRecoveredTextView;
 
     public Home() {
-
     }
 
     @Override
