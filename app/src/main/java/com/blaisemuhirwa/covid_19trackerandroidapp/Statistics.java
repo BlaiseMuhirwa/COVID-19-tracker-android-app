@@ -21,6 +21,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class Statistics extends Fragment {
@@ -33,6 +40,8 @@ public class Statistics extends Fragment {
     private EditText searchInput;
     private ImageButton sortButton;
     private RecyclerView statsRecyclerView;
+    private ArrayList<ModelStatistics> statsList;
+    private AdapterStatistics adapter;
 
     public Statistics() {
 
@@ -56,7 +65,7 @@ public class Statistics extends Fragment {
         statsRecyclerView = view.findViewById(R.id.statsRecyclerView);
 
         progressBar.setVisibility(View.GONE);
-
+        loadStatisticsData();
         return view;
     }
 
@@ -87,7 +96,41 @@ public class Statistics extends Fragment {
     }
 
     private void handleJSONResponse(String response) {
+        statsList = new ArrayList<>();
 
+        try {
+            /* Create a JSON object from the response we get using the api
+                Required: response
+                Created:
+                    - new confirmed cases
+                    - total confirmed cases
+                    - new deaths
+                    - total deaths
+                    - new recovered
+                    - total recovered
+            */
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("Countries");
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat("dd/MM/yyyy hh:mm a");
+            Gson gson = gsonBuilder.create();
+
+            /* getting data */
+            for (int i = 0; i < jsonArray.length(); i++) {
+                ModelStatistics modelStats = gson.fromJson(jsonArray.getJSONObject(i).toString(), ModelStatistics.class);
+                statsList.add(modelStats);
+            }
+
+            /* set up the adapter */
+            adapter = new AdapterStatistics(context, statsList);
+            statsRecyclerView.setAdapter(adapter);
+
+            progressBar.setVisibility(View.GONE);
+        }
+        catch (Exception exception) {
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(context, ""+exception.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
