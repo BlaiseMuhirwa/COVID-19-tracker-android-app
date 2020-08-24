@@ -77,7 +77,6 @@ public class Statistics extends Fragment {
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -90,7 +89,6 @@ public class Statistics extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
         /* display a menu for sorting options */
@@ -120,7 +118,6 @@ public class Statistics extends Fragment {
             public void onClick(View view) {
                 /* show menu */
                 menu.show();
-
             }
         });
         return view;
