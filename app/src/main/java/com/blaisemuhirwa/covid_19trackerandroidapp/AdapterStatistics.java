@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.StatsHolder> {
     private Context context;
-    private ArrayList<ModelStatistics> statisticsList;
+    public ArrayList<ModelStatistics> statisticsList;
 
     public AdapterStatistics(Context context, ArrayList<ModelStatistics> statisticsList) {
         this.context = context;
