@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView titleTextView;
 
     /* fragments */
-    private Fragment Home, Statistics;
+    private Fragment home, statistics;
     private Fragment activeFragment;
     private FragmentManager fragmentManager;
     
@@ -49,14 +49,22 @@ public class MainActivity extends AppCompatActivity implements
         navigationView.setOnNavigationItemSelectedListener(this);
 
     }
-
     private void initializeFragments() {
         /* initialize fragments */
-        Home = new Home();
-        Statistics = new Statistics();
+        home = new Home();
+        statistics = new Statistics();
         fragmentManager = getSupportFragmentManager();
-        activeFragment = Home;
+        activeFragment = home;
+        fragmentManager.beginTransaction().add(R.id.frameLayout, home, "Home").commit();
+        fragmentManager.beginTransaction().add(R.id.frameLayout, statistics, "Statistics")
+                .hide(statistics)
+                .commit();
 
+    }
+    private void loadHomeFragment() {
+        titleTextView.setText("Home");
+        fragmentManager.beginTransaction().hide(activeFragment).show(home).commit();
+        activeFragment = home;
     }
 
     @Override
