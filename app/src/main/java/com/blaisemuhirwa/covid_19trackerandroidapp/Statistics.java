@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -47,7 +52,6 @@ public class Statistics extends Fragment {
     private AdapterStatistics adapter;
 
     public Statistics() {
-
     }
 
     @Override
@@ -75,7 +79,6 @@ public class Statistics extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
@@ -85,22 +88,43 @@ public class Statistics extends Fragment {
                     exception.printStackTrace();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
-
+        /* display a menu for sorting options */
+        final PopupMenu menu = new PopupMenu(context, sortButton);
+        menu.getMenu().add(Menu.NONE, 0, 0, "Ascending");
+        menu.getMenu().add(Menu.NONE, 1, 1, "Descending");
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                /* handle item clicks */
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case 0:
+                        Collections.sort(statsList, new SortedCountriesInAscendingOrder());
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        Collections.sort(statsList, new SortedCountriesInDescendingOrder());
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+                return false;
+            }
+        });
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /* show menu */
+                menu.show();
 
             }
         });
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -185,15 +209,3 @@ public class Statistics extends Fragment {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

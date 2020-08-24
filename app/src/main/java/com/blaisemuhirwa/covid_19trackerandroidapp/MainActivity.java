@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 home.onResume();
+                statistics.onResume();
             }
         });
         navigationView.setOnNavigationItemSelectedListener(this);
