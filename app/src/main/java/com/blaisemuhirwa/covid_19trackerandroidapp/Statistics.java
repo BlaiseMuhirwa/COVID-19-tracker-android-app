@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class Statistics extends Fragment {
@@ -66,7 +69,42 @@ public class Statistics extends Fragment {
 
         progressBar.setVisibility(View.GONE);
         loadStatisticsData();
+
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    adapter.getFilter().filter(charSequence);
+                }
+                catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadStatisticsData();
     }
 
     private void loadStatisticsData() {
@@ -89,7 +127,6 @@ public class Statistics extends Fragment {
                 Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
         /* add requests to queue */
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
@@ -97,7 +134,6 @@ public class Statistics extends Fragment {
 
     private void handleJSONResponse(String response) {
         statsList = new ArrayList<>();
-
         try {
             /* Create a JSON object from the response we get using the api
                 Required: response
@@ -120,7 +156,6 @@ public class Statistics extends Fragment {
                 ModelStatistics modelStats = gson.fromJson(jsonArray.getJSONObject(i).toString(), ModelStatistics.class);
                 statsList.add(modelStats);
             }
-
             /* set up the adapter */
             adapter = new AdapterStatistics(context, statsList);
             statsRecyclerView.setAdapter(adapter);
@@ -130,6 +165,22 @@ public class Statistics extends Fragment {
         catch (Exception exception) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(context, ""+exception.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class SortedCountriesInAscendingOrder implements Comparator<ModelStatistics> {
+        /* Implements sorting countries in an ascending order */
+        @Override
+        public int compare(ModelStatistics first, ModelStatistics second) {
+            return first.getCountry().compareTo(second.getCountry());
+        }
+    }
+
+    class SortedCountriesInDescendingOrder implements Comparator<ModelStatistics> {
+        /* Implements sorting countries in a descending order */
+        @Override
+        public int compare(ModelStatistics first, ModelStatistics second) {
+            return second.getCountry().compareTo(first.getCountry());
         }
     }
 
