@@ -2,7 +2,7 @@ package com.blaisemuhirwa.covid_19trackerandroidapp;
 
 public class ModelStatistics {
     String Country, CountryCode, Slug, NewConfirmed, TotalConfirmed, NewDeaths, TotalDeaths, NewRecovered,
-    TotalRecovered, Data, Premium;
+    TotalRecovered, Data;
 
     public ModelStatistics() {
     }
@@ -19,7 +19,6 @@ public class ModelStatistics {
         this.NewRecovered = newRecovered;
         this.TotalRecovered = totalRecovered;
         this.Data = data;
-        this.Premium = premium;
     }
 
     public String getCountry() {
@@ -102,11 +101,4 @@ public class ModelStatistics {
         Data = data;
     }
 
-    public String getPremium() {
-        return Premium;
-    }
-
-    public void setPremium(String premium) {
-        Premium = premium;
-    }
 }
