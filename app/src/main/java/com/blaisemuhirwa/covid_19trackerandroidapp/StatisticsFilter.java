@@ -17,7 +17,7 @@ public class StatisticsFilter extends Filter {
     @Override
     protected FilterResults performFiltering(CharSequence charSequence) {
 
-        FilterResults results = new FilterResults();
+        FilterResults filterResults = new FilterResults();
         /* check the validity of the constraint */
         if (charSequence != null && charSequence.length() > 0) {
             charSequence = charSequence.toString().toUpperCase();
@@ -30,19 +30,23 @@ public class StatisticsFilter extends Filter {
                 }
             }
 
-            results.count = filteredModels.size();
-            results.values = filteredModels;
+            filterResults.count = filteredModels.size();
+            filterResults.values = filteredModels;
         }
         else {
-            results.count = filterList.size();
-            results.values = filterList;
+            filterResults.count = filterList.size();
+            filterResults.values = filterList;
         }
 
-        return results;
+        return filterResults;
     }
 
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+        adapter.statisticsList = (ArrayList<ModelStatistics>) filterResults.values;
+
+        /* refresh the statistics list */
+        adapter.notifyDataSetChanged();
 
     }
 }
