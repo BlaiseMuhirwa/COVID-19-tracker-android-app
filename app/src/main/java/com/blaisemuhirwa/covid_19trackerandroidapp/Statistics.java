@@ -132,7 +132,8 @@ public class Statistics extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         /* call to the STATISTICS_API */
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, STATISTICS_API, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, STATISTICS_API, 
+                                                        new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 handleJSONResponse(response);
@@ -174,7 +175,8 @@ public class Statistics extends Fragment {
 
             /* getting data */
             for (int i = 0; i < jsonArray.length(); i++) {
-                ModelStatistics modelStats = gson.fromJson(jsonArray.getJSONObject(i).toString(), ModelStatistics.class);
+                ModelStatistics modelStats = gson.fromJson(jsonArray.getJSONObject(i).toString(), 
+                                                           ModelStatistics.class);
                 statsList.add(modelStats);
             }
             /* set up the adapter */
