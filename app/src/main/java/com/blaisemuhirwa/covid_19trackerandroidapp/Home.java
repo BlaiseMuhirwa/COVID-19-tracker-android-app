@@ -88,7 +88,7 @@ public class Home extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                /* handle error occurrence:
+                /* handle failed get request:
                     - hide progress bar
                     - display the error message
                  */
