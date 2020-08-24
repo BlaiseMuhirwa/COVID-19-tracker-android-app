@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- menu for bottom navigation bar-->
+    <item android:id="@+id/navigation_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home_black"/>
+
+    <item android:id="@+id/navigation_statistics"
+        android:title="Statistics"
+        android:icon="@drawable/ic_statistics" />
+</menu>
