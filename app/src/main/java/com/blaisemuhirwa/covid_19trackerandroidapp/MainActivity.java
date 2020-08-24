@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements
         fragmentManager.beginTransaction().hide(activeFragment).show(home).commit();
         activeFragment = home;
     }
+    private void loadStatisticsFragment() {
+        /* to be completed */
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
