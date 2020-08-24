@@ -4,20 +4,26 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.StatsHolder> {
+public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.StatsHolder> implements Filterable {
     private Context context;
     public ArrayList<ModelStatistics> statisticsList;
+    public ArrayList<ModelStatistics> filterList;
+    private StatisticsFilter filter;
 
     public AdapterStatistics(Context context, ArrayList<ModelStatistics> statisticsList) {
         this.context = context;
         this.statisticsList = statisticsList;
+        this.filterList = statisticsList;
     }
 
     @NonNull
@@ -55,6 +61,14 @@ public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.St
     @Override
     public int getItemCount() {
         return statisticsList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new StatisticsFilter(this, filterList);
+        }
+        return filter;
     }
 
     class StatsHolder extends RecyclerView.ViewHolder {
