@@ -62,12 +62,14 @@ public class MainActivity extends AppCompatActivity implements
 
     }
     private void loadHomeFragment() {
-        titleTextView.setText("Home");
+        titleTextView.setText("HOME");
         fragmentManager.beginTransaction().hide(activeFragment).show(home).commit();
         activeFragment = home;
     }
     private void loadStatisticsFragment() {
-        /* to be completed */
+        titleTextView.setText("COVID-19 STATISTICS");
+        fragmentManager.beginTransaction().hide(activeFragment).show(statistics).commit();
+        activeFragment = statistics;
     }
 
     @Override
@@ -76,9 +78,11 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 /* load home data */
+                loadHomeFragment();
                 return true;
             case R.id.navigation_statistics:
                 /* load the statistics */
+                loadStatisticsFragment();
                 return true;
         }
         return false;
