@@ -1,14 +1,13 @@
 # corona virus tracker android app
 # note: 
-    This application is still in development.
+This application is still in development.
 
 # introduction
 Android-based COVID-19 tracker,which uses the Postman REST API to provide real-time statistics. 
 
-Created by Blaise Munyampirwa
-
-    LinkedIn: https://www.linkedin.com/in/blaise-munyampirwa-2a1673143/ 
-    E-mail: blaisemuhirwa3@gmail.com 
+Created by Blaise Munyampirwa \
+LinkedIn: https://www.linkedin.com/in/blaise-munyampirwa-2a1673143/  \
+E-mail: blaisemuhirwa3@gmail.com 
 # api
     https://api.covid19api.com/summary
 # details
