@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class Home extends Fragment {
     private TextView newDeathsTextView;
     private TextView totalRecoveredTextView;
     private TextView newRecoveredTextView;
+    private SwipeRefreshLayout swipeContainer;
 
     public Home() {
     }
@@ -61,6 +63,21 @@ public class Home extends Fragment {
         newDeathsTextView = view.findViewById(R.id.newDeathsTextView);
         totalRecoveredTextView = view.findViewById(R.id.totalRecoveredTextView);
         newRecoveredTextView = view.findViewById(R.id.newRecoveredTextView);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadHomeData();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         progressBar.setVisibility(View.GONE);
         loadHomeData();
