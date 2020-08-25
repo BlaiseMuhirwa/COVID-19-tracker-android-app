@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/colorGray1"
+    android:orientation="vertical"
     tools:context=".Statistics">
 
     <RelativeLayout
@@ -30,25 +30,27 @@
             android:layout_toLeftOf="@id/progressBar"
             android:background="@drawable/shape_rectangle"
             android:drawableStart="@drawable/ic_search_bar"
-            android:hint="Search"
             android:drawableLeft="@drawable/ic_search_bar"
-            android:textColor="@color/colorBlack"
+            android:hint="@string/search"
             android:padding="8dp"
+            android:textColor="@color/colorBlack"
             android:textColorHint="@color/colorGray2"
-            />
+            android:inputType="text"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/sortButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_sort"
-            android:tint="@color/colorGray3" />
+            app:srcCompat="@drawable/ic_sort"
+            android:tint="@color/colorGray3"
+            android:contentDescription="@string/sort_button" />
 
     </RelativeLayout>
 
@@ -56,8 +58,9 @@
         android:id="@+id/statsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/raw_statistics"/>
+        tools:listitem="@layout/raw_statistics" />
 
 
 </LinearLayout>
