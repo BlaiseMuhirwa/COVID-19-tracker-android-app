@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.StatsHolder> implements Filterable {
@@ -71,7 +70,7 @@ public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.St
         return filter;
     }
 
-    class StatsHolder extends RecyclerView.ViewHolder {
+    static class StatsHolder extends RecyclerView.ViewHolder {
         /* user interface fields */
         TextView CountryTextView;
         TextView casesTextView;
@@ -85,13 +84,13 @@ public class AdapterStatistics extends RecyclerView.Adapter<AdapterStatistics.St
             super(itemView);
 
             /* initialize user-interface views */
-            CountryTextView = itemView.findViewById(R.id.CountryTextView);
-            casesTextView = itemView.findViewById(R.id.casesTextView);
-            todayCasesTextView = itemView.findViewById(R.id.todayCasesTextView);
-            deathsTextView = itemView.findViewById(R.id.deathsTextView);
-            todayDeathsTextView = itemView.findViewById(R.id.todayDeathsTextView);
-            recoveredTextView = itemView.findViewById(R.id.recoveredTextView);
-            recoveredTodayTextView = itemView.findViewById(R.id.recoveredTodayTextView);
+            CountryTextView = itemView.findViewById(R.id.tvCountry);
+            casesTextView = itemView.findViewById(R.id.tvTotalCases);
+            todayCasesTextView = itemView.findViewById(R.id.tvCasesToday);
+            deathsTextView = itemView.findViewById(R.id.tvTotalDeaths);
+            todayDeathsTextView = itemView.findViewById(R.id.tvDeathsToday);
+            recoveredTextView = itemView.findViewById(R.id.tvTotalRecoveries);
+            recoveredTodayTextView = itemView.findViewById(R.id.tvRecoveriesToday);
 
         }
     }
